@@ -37,3 +37,7 @@ export function formatMonthDay(time: any) {
 export function formatMinuteSecond(time: any) {
   return formatDate(time, 'mm:ss')
 }
+
+export function getSizeImage(imgUrl: any, size: any) {
+  return `${imgUrl}?param=${size}x${size}`
+}

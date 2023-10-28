@@ -28,6 +28,7 @@ const rankingSlice = createSlice({
       state.list = payload.list
       state.artistTOPlist = payload.artistToplist
       state.rewardToplist = payload.rewardToplist
+      console.log(state.list, state.artistTOPlist, state.rewardToplist)
     }
   }
 })

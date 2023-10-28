@@ -1,12 +1,41 @@
 import React, { memo } from 'react'
-import type { FC, ReactNode } from 'react'
+import { useSelector, shallowEqual } from 'react-redux'
 
-interface IProps {
-  children?: ReactNode
-}
+import { formatMonthDay } from '@/utils/format-utils'
 
-const rankingHeader: FC<IProps> = () => {
-  return <div>Template</div>
-}
+import HYSongOperationBar from '@/components/song-operation-bar'
+import { RankingHeaderWrapper } from './styled'
 
-export default memo(rankingHeader)
+export default memo(function HYRankingHeader() {
+  // redux
+  const state = useSelector(
+    (state) => ({
+      playList: state
+    }),
+    shallowEqual
+  )
+  const topInfo: any = state.playList
+
+  return (
+    <RankingHeaderWrapper>
+      <div className="image">
+        <img src={topInfo.coverImgUrl} alt="" />
+        <span className="image_cover">封面</span>
+      </div>
+      <div className="info">
+        <div className="title">{topInfo.name}</div>
+        <div className="time">
+          <i className="clock sprite_icon2"></i>
+          <div>最近更新：{formatMonthDay(topInfo.updateTime)}</div>
+          <div className="update-f">（{'每日更新:TODO'}）</div>
+        </div>
+        <HYSongOperationBar
+          favorTitle={`(${topInfo.subscribedCount})`}
+          shareTitle={`(${topInfo.shareCount})`}
+          downloadTitle="下载"
+          commentTitle={`(${topInfo.commentCount})`}
+        />
+      </div>
+    </RankingHeaderWrapper>
+  )
+})
